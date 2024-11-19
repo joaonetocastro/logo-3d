@@ -94,6 +94,7 @@
     const content3D = document.getElementById("content-3d");
     const contentAR = document.getElementById("content-ar");
     let activeContent = content3D;
+    content3D.cameraOrbit = "0deg 0deg 120%";
 
     function showContent(contentType) {
       const arVideo = document.getElementById("arjs-video");
@@ -109,6 +110,7 @@
       }
       if (contentType === "3D") {
         activeContent = content3D;
+        content3D.cameraOrbit = "0deg 0deg 150%";
         arVideo.style.display = "none";
         content3D.cameraControls = true;
       }
