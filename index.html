@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="flex flex-col items-center h-dvh !w-dvw overflow-hidden !m-0">
+    <model-viewer
+      id="content-3d"
+      src="logo.glb"
+      camera-controls
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      class="h-full w-dvw active-content"
+    >
+      <button slot="ar-button" class="hidden">Native AR</button>
+    </model-viewer>
+
+    <a-scene embedded arjs vr-mode-ui="false" id="content-ar" class="hidden">
+      <a-marker preset="hiro">
+        <a-entity
+          position="0.1 1 0"
+          rotation="90 0 0"
+          scale="0.04 0.02 0.02"
+          gltf-model="url(logo.glb)"
+        ></a-entity>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <div
+      class="absolute grid w-4/5 md:w-[30rem] grid-cols-3 gap-2 rounded-xl bg-gray-200 text-gray-700 p-2 bottom-8"
+    >
+      <div>
+        <input
+          type="radio"
+          name="option"
+          id="2d"
+          class="peer hidden"
+          onclick="showContent('2D')"
+        />
+        <label
+          for="2d"
+          class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+          >2D</label
+        >
+      </div>
+
+      <div>
+        <input
+          type="radio"
+          name="option"
+          id="3d"
+          class="peer hidden"
+          onclick="showContent('3D')"
+          checked
+        />
+        <label
+          for="3d"
+          class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+          >3D</label
+        >
+      </div>
+
+      <div>
+        <input
+          type="radio"
+          name="option"
+          id="ar"
+          class="peer hidden"
+          onclick="showContent('AR')"
+        />
+        <label
+          for="ar"
+          class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+          >AR</label
+        >
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const content3D = document.getElementById("content-3d");
+    const contentAR = document.getElementById("content-ar");
+    let activeContent = content3D;
+
+    function showContent(contentType) {
+      const arVideo = document.getElementById("arjs-video");
+
+      activeContent.classList.remove("active-content");
+      activeContent.classList.add("hidden");
+
+      if (contentType === "2D") {
+        activeContent = content3D;
+        arVideo.style.display = "none";
+        content3D.cameraControls = false;
+        content3D.cameraOrbit = "0deg 0deg 150%";
+      }
+      if (contentType === "3D") {
+        activeContent = content3D;
+        arVideo.style.display = "none";
+        content3D.cameraControls = true;
+      }
+      if (contentType === "AR") {
+        activeContent = contentAR;
+        arVideo.style.display = "block";
+      }
+
+      activeContent.classList.remove("hidden");
+      activeContent.classList.add("active-content");
+    }
+  </script>
+
+  <style>
+    #arjs-video {
+      display: none;
+      max-width: none;
+    }
+    @media (min-width: 640px) {
+      #arjs-video {
+        max-width: 100dvw !important;
+        height: 100dvh !important;
+        width: 100dvw !important;
+        margin: 0 !important;
+      }
+    }
+  </style>
+</html>
