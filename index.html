@@ -94,7 +94,7 @@
     const content3D = document.getElementById("content-3d");
     const contentAR = document.getElementById("content-ar");
     let activeContent = content3D;
-    content3D.cameraOrbit = "0deg 0deg 120%";
+    content3D.cameraOrbit = "15deg 45deg 90%";
 
     function showContent(contentType) {
       const arVideo = document.getElementById("arjs-video");
@@ -106,11 +106,11 @@
         activeContent = content3D;
         arVideo.style.display = "none";
         content3D.cameraControls = false;
-        content3D.cameraOrbit = "0deg 0deg 150%";
+        content3D.cameraOrbit = "0deg 0deg 200%";
       }
       if (contentType === "3D") {
         activeContent = content3D;
-        content3D.cameraOrbit = "0deg 0deg 150%";
+        content3D.cameraOrbit = "15deg 45deg 90%";
         arVideo.style.display = "none";
         content3D.cameraControls = true;
       }
